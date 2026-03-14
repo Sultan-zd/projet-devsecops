@@ -6,6 +6,8 @@ app = Flask(__name__)
 # Un développeur a laissé ces identifiants "en dur" dans le code
 DB_PASSWORD = "SuperSecretPassword123!"
 AWS_API_KEY = "AKIAIOSFODNN7EXAMPLE"
+# Faux token GitHub pour déclencher l'alerte
+GITHUB_TOKEN = "ghp_1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 @app.route('/')
 def home():
