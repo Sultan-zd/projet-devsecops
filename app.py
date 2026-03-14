@@ -1,4 +1,6 @@
 from flask import Flask, jsonify
+import sqlite3
+from flask import request
 
 app = Flask(__name__)
 
@@ -20,3 +22,19 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+@app.route('/recherche')
+def recherche():
+    utilisateur = request.args.get('nom')
+    conn = sqlite3.connect('mabase.db')
+    cursor = conn.cursor()
+    
+    # 🚨 FAILLE DE SÉCURITÉ (Injection SQL) 🚨
+    # On insère directement ce que l'utilisateur a tapé dans la requête.
+    # Un pirate pourrait taper :  "nom'; DROP TABLE utilisateurs;--"
+    requete = f"SELECT * FROM utilisateurs WHERE nom = '{utilisateur}'"
+    cursor.execute(requete)
+    
+    return "Recherche terminée"
